@@ -570,10 +570,10 @@ public class GlowingEntities implements Listener {
 			pushOtherTeams = pushClass.getField("PUSH_OTHER_TEAMS").get(null);
 			pushOwnTeam = pushClass.getField("PUSH_OWN_TEAM").get(null);
 
-			pushAlways = visibilityClass.getField("ALWAYS").get(null);
-			pushNever = visibilityClass.getField("NEVER").get(null);
-			pushOtherTeams = visibilityClass.getField("HIDE_FOR_OTHER_TEAMS").get(null);
-			pushOwnTeam = visibilityClass.getField("HIDE_FOR_OWN_TEAM").get(null);
+			visibilityAlways = visibilityClass.getField("ALWAYS").get(null);
+			visibilityNever = visibilityClass.getField("NEVER").get(null);
+			visibilityForOtherTeams = visibilityClass.getField("HIDE_FOR_OTHER_TEAMS").get(null);
+			visibilityForOwnTeam = visibilityClass.getField("HIDE_FOR_OWN_TEAM").get(null);
 
 			setNameTagVisibility = teamClass.getMethodInstance("setNameTagVisibility", visibilityClass);
 			setCollisionRule = teamClass.getMethodInstance("setCollisionRule", pushClass);
