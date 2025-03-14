@@ -215,15 +215,12 @@ public class GlowingBlocks implements Listener {
 	}
 
 	private record PlayerData(@NotNull Player player, @NotNull Map<Location, GlowingBlockData> datas) {
-
 		public PlayerData(@NotNull Player player) {
 			this(player, new HashMap<>());
 		}
-
 	}
 
 	private class GlowingBlockData {
-
 		private static final byte FLAGS = 1 << 5; // invisibility flag
 		private static final AtomicInteger ENTITY_ID_COUNTER =
 				new AtomicInteger(ThreadLocalRandom.current().nextInt(1_000_000, 2_000_000_000));
@@ -245,7 +242,7 @@ public class GlowingBlocks implements Listener {
 			this.color = color;
 
 			if (entityUuid != null)
-				entities.setGlowing(entityId, entityUuid.toString(), player, color, FLAGS);
+				entities.setGlowing(entityId, entityUuid.toString(), player, new GlowTeam(color), FLAGS);
 		}
 
 		public void spawn() throws ReflectiveOperationException {
@@ -272,7 +269,5 @@ public class GlowingBlocks implements Listener {
 				setColor(color);
 			}
 		}
-
 	}
-
 }

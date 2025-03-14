@@ -1,22 +1,22 @@
 # reflection-remapper | AVAILABLE VERSIONS
-# reflection-remapper | 1.21.0 20-68
-# reflection-remapper | 1.21.1 69-117
-# reflection-remapper | 1.19.0 118-155
-# reflection-remapper | 1.20.1 156-199
-# reflection-remapper | 1.18.0 200-237
-# reflection-remapper | 1.19.1 238-275
-# reflection-remapper | 1.20.2 276-319
-# reflection-remapper | 1.21.3 320-368
-# reflection-remapper | 1.17.0 369-406
-# reflection-remapper | 1.18.1 407-444
-# reflection-remapper | 1.19.2 445-482
-# reflection-remapper | 1.21.4 483-531
-# reflection-remapper | 1.17.1 532-569
-# reflection-remapper | 1.18.2 570-607
-# reflection-remapper | 1.19.3 608-649
-# reflection-remapper | 1.20.4 650-693
-# reflection-remapper | 1.19.4 694-737
-# reflection-remapper | 1.20.6 738-786
+# reflection-remapper | 1.21.0 20-77
+# reflection-remapper | 1.21.1 78-135
+# reflection-remapper | 1.19.0 136-182
+# reflection-remapper | 1.20.1 183-235
+# reflection-remapper | 1.18.0 236-282
+# reflection-remapper | 1.19.1 283-329
+# reflection-remapper | 1.20.2 330-382
+# reflection-remapper | 1.21.3 383-440
+# reflection-remapper | 1.17.0 441-487
+# reflection-remapper | 1.18.1 488-534
+# reflection-remapper | 1.19.2 535-581
+# reflection-remapper | 1.21.4 582-639
+# reflection-remapper | 1.17.1 640-686
+# reflection-remapper | 1.18.2 687-733
+# reflection-remapper | 1.19.3 734-784
+# reflection-remapper | 1.20.4 785-837
+# reflection-remapper | 1.19.4 838-890
+# reflection-remapper | 1.20.6 891-948
 # reflection-remapper | AVAILABLE VERSIONS
 net.minecraft.world.entity.EntityType -> net.minecraft.world.entity.EntityTypes:
     MARKER -> aq
@@ -35,7 +35,10 @@ net.minecraft.network.syncher.SynchedEntityData$DataValue -> net.minecraft.netwo
 net.minecraft.server.level.ServerPlayer -> net.minecraft.server.level.EntityPlayer:
     connection -> c
 net.minecraft.world.scores.Team$CollisionRule -> net.minecraft.world.scores.ScoreboardTeamBase$EnumTeamPush:
+    ALWAYS -> a
     NEVER -> b
+    PUSH_OTHER_TEAMS -> c
+    PUSH_OWN_TEAM -> d
 net.minecraft.ChatFormatting -> net.minecraft.EnumChatFormat:
     getByCode(char) -> a
 net.minecraft.network.syncher.EntityDataSerializer -> net.minecraft.network.syncher.DataWatcherSerializer:
@@ -46,6 +49,7 @@ net.minecraft.network.syncher.SynchedEntityData$Builder -> net.minecraft.network
 net.minecraft.network.syncher.SyncedDataHolder -> net.minecraft.network.syncher.SyncedDataHolder:
 net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket -> net.minecraft.network.protocol.game.PacketPlayOutEntityDestroy:
 net.minecraft.world.scores.PlayerTeam -> net.minecraft.world.scores.ScoreboardTeam:
+    setNameTagVisibility(net.minecraft.world.scores.Team$Visibility) -> a
     setCollisionRule(net.minecraft.world.scores.Team$CollisionRule) -> a
     setColor(net.minecraft.ChatFormatting) -> a
 net.minecraft.network.syncher.EntityDataAccessor -> net.minecraft.network.syncher.DataWatcherObject:
@@ -65,6 +69,11 @@ net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket -> net.minecr
 net.minecraft.world.phys.Vec3 -> net.minecraft.world.phys.Vec3D:
 net.minecraft.world.entity.Marker -> net.minecraft.world.entity.Marker:
 net.minecraft.network.protocol.Packet -> net.minecraft.network.protocol.Packet:
+net.minecraft.world.scores.Team$Visibility -> net.minecraft.world.scores.ScoreboardTeamBase$EnumNameTagVisibility:
+    ALWAYS -> a
+    NEVER -> b
+    HIDE_FOR_OTHER_TEAMS -> c
+    HIDE_FOR_OWN_TEAM -> d
 net.minecraft.world.level.Level -> net.minecraft.world.level.World:
 net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket$Parameters -> net.minecraft.network.protocol.game.PacketPlayOutScoreboardTeam$b:
 net.minecraft.world.entity.EntityType -> net.minecraft.world.entity.EntityTypes:
@@ -84,7 +93,10 @@ net.minecraft.network.syncher.SynchedEntityData$DataValue -> net.minecraft.netwo
 net.minecraft.server.level.ServerPlayer -> net.minecraft.server.level.EntityPlayer:
     connection -> c
 net.minecraft.world.scores.Team$CollisionRule -> net.minecraft.world.scores.ScoreboardTeamBase$EnumTeamPush:
+    ALWAYS -> a
     NEVER -> b
+    PUSH_OTHER_TEAMS -> c
+    PUSH_OWN_TEAM -> d
 net.minecraft.ChatFormatting -> net.minecraft.EnumChatFormat:
     getByCode(char) -> a
 net.minecraft.network.syncher.EntityDataSerializer -> net.minecraft.network.syncher.DataWatcherSerializer:
@@ -95,6 +107,7 @@ net.minecraft.network.syncher.SynchedEntityData$Builder -> net.minecraft.network
 net.minecraft.network.syncher.SyncedDataHolder -> net.minecraft.network.syncher.SyncedDataHolder:
 net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket -> net.minecraft.network.protocol.game.PacketPlayOutEntityDestroy:
 net.minecraft.world.scores.PlayerTeam -> net.minecraft.world.scores.ScoreboardTeam:
+    setNameTagVisibility(net.minecraft.world.scores.Team$Visibility) -> a
     setCollisionRule(net.minecraft.world.scores.Team$CollisionRule) -> a
     setColor(net.minecraft.ChatFormatting) -> a
 net.minecraft.network.syncher.EntityDataAccessor -> net.minecraft.network.syncher.DataWatcherObject:
@@ -114,10 +127,16 @@ net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket -> net.minecr
 net.minecraft.world.phys.Vec3 -> net.minecraft.world.phys.Vec3D:
 net.minecraft.world.entity.Marker -> net.minecraft.world.entity.Marker:
 net.minecraft.network.protocol.Packet -> net.minecraft.network.protocol.Packet:
+net.minecraft.world.scores.Team$Visibility -> net.minecraft.world.scores.ScoreboardTeamBase$EnumNameTagVisibility:
+    ALWAYS -> a
+    NEVER -> b
+    HIDE_FOR_OTHER_TEAMS -> c
+    HIDE_FOR_OWN_TEAM -> d
 net.minecraft.world.level.Level -> net.minecraft.world.level.World:
 net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket$Parameters -> net.minecraft.network.protocol.game.PacketPlayOutScoreboardTeam$b:
 net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket -> net.minecraft.network.protocol.game.PacketPlayOutEntityDestroy:
 net.minecraft.world.scores.PlayerTeam -> net.minecraft.world.scores.ScoreboardTeam:
+    setNameTagVisibility(net.minecraft.world.scores.Team$Visibility) -> a
     setCollisionRule(net.minecraft.world.scores.Team$CollisionRule) -> a
     setColor(net.minecraft.ChatFormatting) -> a
 net.minecraft.world.entity.EntityType -> net.minecraft.world.entity.EntityTypes:
@@ -134,7 +153,10 @@ net.minecraft.world.scores.Scoreboard -> net.minecraft.world.scores.Scoreboard:
 net.minecraft.server.level.ServerPlayer -> net.minecraft.server.level.EntityPlayer:
     connection -> b
 net.minecraft.world.scores.Team$CollisionRule -> net.minecraft.world.scores.ScoreboardTeamBase$EnumTeamPush:
+    ALWAYS -> a
     NEVER -> b
+    PUSH_OTHER_TEAMS -> c
+    PUSH_OWN_TEAM -> d
 net.minecraft.server.network.ServerGamePacketListenerImpl -> net.minecraft.server.network.PlayerConnection:
     connection -> b
     send(net.minecraft.network.protocol.Packet) -> a
@@ -152,10 +174,16 @@ net.minecraft.ChatFormatting -> net.minecraft.EnumChatFormat:
     getByCode(char) -> a
 net.minecraft.world.entity.Marker -> net.minecraft.world.entity.Marker:
 net.minecraft.network.protocol.Packet -> net.minecraft.network.protocol.Packet:
+net.minecraft.world.scores.Team$Visibility -> net.minecraft.world.scores.ScoreboardTeamBase$EnumNameTagVisibility:
+    ALWAYS -> a
+    NEVER -> b
+    HIDE_FOR_OTHER_TEAMS -> c
+    HIDE_FOR_OWN_TEAM -> d
 net.minecraft.world.level.Level -> net.minecraft.world.level.World:
 net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket$Parameters -> net.minecraft.network.protocol.game.PacketPlayOutScoreboardTeam$b:
 net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket -> net.minecraft.network.protocol.game.PacketPlayOutEntityDestroy:
 net.minecraft.world.scores.PlayerTeam -> net.minecraft.world.scores.ScoreboardTeam:
+    setNameTagVisibility(net.minecraft.world.scores.Team$Visibility) -> a
     setCollisionRule(net.minecraft.world.scores.Team$CollisionRule) -> a
     setColor(net.minecraft.ChatFormatting) -> a
 net.minecraft.world.entity.EntityType -> net.minecraft.world.entity.EntityTypes:
@@ -179,7 +207,10 @@ net.minecraft.world.scores.Scoreboard -> net.minecraft.world.scores.Scoreboard:
 net.minecraft.server.level.ServerPlayer -> net.minecraft.server.level.EntityPlayer:
     connection -> c
 net.minecraft.world.scores.Team$CollisionRule -> net.minecraft.world.scores.ScoreboardTeamBase$EnumTeamPush:
+    ALWAYS -> a
     NEVER -> b
+    PUSH_OTHER_TEAMS -> c
+    PUSH_OWN_TEAM -> d
 net.minecraft.server.network.ServerGamePacketListenerImpl -> net.minecraft.server.network.PlayerConnection:
     connection -> h
     send(net.minecraft.network.protocol.Packet) -> a
@@ -196,10 +227,16 @@ net.minecraft.world.entity.Marker -> net.minecraft.world.entity.Marker:
 net.minecraft.network.protocol.Packet -> net.minecraft.network.protocol.Packet:
 net.minecraft.network.syncher.EntityDataSerializer -> net.minecraft.network.syncher.DataWatcherSerializer:
     createAccessor(int) -> a
+net.minecraft.world.scores.Team$Visibility -> net.minecraft.world.scores.ScoreboardTeamBase$EnumNameTagVisibility:
+    ALWAYS -> a
+    NEVER -> b
+    HIDE_FOR_OTHER_TEAMS -> c
+    HIDE_FOR_OWN_TEAM -> d
 net.minecraft.world.level.Level -> net.minecraft.world.level.World:
 net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket$Parameters -> net.minecraft.network.protocol.game.PacketPlayOutScoreboardTeam$b:
 net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket -> net.minecraft.network.protocol.game.PacketPlayOutEntityDestroy:
 net.minecraft.world.scores.PlayerTeam -> net.minecraft.world.scores.ScoreboardTeam:
+    setNameTagVisibility(net.minecraft.world.scores.Team$Visibility) -> a
     setCollisionRule(net.minecraft.world.scores.Team$CollisionRule) -> a
     setColor(net.minecraft.ChatFormatting) -> a
 net.minecraft.world.entity.EntityType -> net.minecraft.world.entity.EntityTypes:
@@ -216,7 +253,10 @@ net.minecraft.world.scores.Scoreboard -> net.minecraft.world.scores.Scoreboard:
 net.minecraft.server.level.ServerPlayer -> net.minecraft.server.level.EntityPlayer:
     connection -> b
 net.minecraft.world.scores.Team$CollisionRule -> net.minecraft.world.scores.ScoreboardTeamBase$EnumTeamPush:
+    ALWAYS -> a
     NEVER -> b
+    PUSH_OTHER_TEAMS -> c
+    PUSH_OWN_TEAM -> d
 net.minecraft.server.network.ServerGamePacketListenerImpl -> net.minecraft.server.network.PlayerConnection:
     connection -> a
     send(net.minecraft.network.protocol.Packet) -> a
@@ -234,10 +274,16 @@ net.minecraft.ChatFormatting -> net.minecraft.EnumChatFormat:
     getByCode(char) -> a
 net.minecraft.world.entity.Marker -> net.minecraft.world.entity.Marker:
 net.minecraft.network.protocol.Packet -> net.minecraft.network.protocol.Packet:
+net.minecraft.world.scores.Team$Visibility -> net.minecraft.world.scores.ScoreboardTeamBase$EnumNameTagVisibility:
+    ALWAYS -> a
+    NEVER -> b
+    HIDE_FOR_OTHER_TEAMS -> c
+    HIDE_FOR_OWN_TEAM -> d
 net.minecraft.world.level.Level -> net.minecraft.world.level.World:
 net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket$Parameters -> net.minecraft.network.protocol.game.PacketPlayOutScoreboardTeam$b:
 net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket -> net.minecraft.network.protocol.game.PacketPlayOutEntityDestroy:
 net.minecraft.world.scores.PlayerTeam -> net.minecraft.world.scores.ScoreboardTeam:
+    setNameTagVisibility(net.minecraft.world.scores.Team$Visibility) -> a
     setCollisionRule(net.minecraft.world.scores.Team$CollisionRule) -> a
     setColor(net.minecraft.ChatFormatting) -> a
 net.minecraft.world.entity.EntityType -> net.minecraft.world.entity.EntityTypes:
@@ -254,7 +300,10 @@ net.minecraft.world.scores.Scoreboard -> net.minecraft.world.scores.Scoreboard:
 net.minecraft.server.level.ServerPlayer -> net.minecraft.server.level.EntityPlayer:
     connection -> b
 net.minecraft.world.scores.Team$CollisionRule -> net.minecraft.world.scores.ScoreboardTeamBase$EnumTeamPush:
+    ALWAYS -> a
     NEVER -> b
+    PUSH_OTHER_TEAMS -> c
+    PUSH_OWN_TEAM -> d
 net.minecraft.server.network.ServerGamePacketListenerImpl -> net.minecraft.server.network.PlayerConnection:
     connection -> b
     send(net.minecraft.network.protocol.Packet) -> a
@@ -272,10 +321,16 @@ net.minecraft.ChatFormatting -> net.minecraft.EnumChatFormat:
     getByCode(char) -> a
 net.minecraft.world.entity.Marker -> net.minecraft.world.entity.Marker:
 net.minecraft.network.protocol.Packet -> net.minecraft.network.protocol.Packet:
+net.minecraft.world.scores.Team$Visibility -> net.minecraft.world.scores.ScoreboardTeamBase$EnumNameTagVisibility:
+    ALWAYS -> a
+    NEVER -> b
+    HIDE_FOR_OTHER_TEAMS -> c
+    HIDE_FOR_OWN_TEAM -> d
 net.minecraft.world.level.Level -> net.minecraft.world.level.World:
 net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket$Parameters -> net.minecraft.network.protocol.game.PacketPlayOutScoreboardTeam$b:
 net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket -> net.minecraft.network.protocol.game.PacketPlayOutEntityDestroy:
 net.minecraft.world.scores.PlayerTeam -> net.minecraft.world.scores.ScoreboardTeam:
+    setNameTagVisibility(net.minecraft.world.scores.Team$Visibility) -> a
     setCollisionRule(net.minecraft.world.scores.Team$CollisionRule) -> a
     setColor(net.minecraft.ChatFormatting) -> a
 net.minecraft.world.entity.EntityType -> net.minecraft.world.entity.EntityTypes:
@@ -302,7 +357,10 @@ net.minecraft.world.scores.Scoreboard -> net.minecraft.world.scores.Scoreboard:
 net.minecraft.server.level.ServerPlayer -> net.minecraft.server.level.EntityPlayer:
     connection -> c
 net.minecraft.world.scores.Team$CollisionRule -> net.minecraft.world.scores.ScoreboardTeamBase$EnumTeamPush:
+    ALWAYS -> a
     NEVER -> b
+    PUSH_OTHER_TEAMS -> c
+    PUSH_OWN_TEAM -> d
 net.minecraft.world.entity.Entity -> net.minecraft.world.entity.Entity:
     DATA_SHARED_FLAGS_ID -> ao
     getEntityData() -> al
@@ -316,6 +374,11 @@ net.minecraft.world.entity.Marker -> net.minecraft.world.entity.Marker:
 net.minecraft.network.protocol.Packet -> net.minecraft.network.protocol.Packet:
 net.minecraft.network.syncher.EntityDataSerializer -> net.minecraft.network.syncher.DataWatcherSerializer:
     createAccessor(int) -> a
+net.minecraft.world.scores.Team$Visibility -> net.minecraft.world.scores.ScoreboardTeamBase$EnumNameTagVisibility:
+    ALWAYS -> a
+    NEVER -> b
+    HIDE_FOR_OTHER_TEAMS -> c
+    HIDE_FOR_OWN_TEAM -> d
 net.minecraft.world.level.Level -> net.minecraft.world.level.World:
 net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket$Parameters -> net.minecraft.network.protocol.game.PacketPlayOutScoreboardTeam$b:
 net.minecraft.world.entity.EntityType -> net.minecraft.world.entity.EntityTypes:
@@ -335,7 +398,10 @@ net.minecraft.network.syncher.SynchedEntityData$DataValue -> net.minecraft.netwo
 net.minecraft.server.level.ServerPlayer -> net.minecraft.server.level.EntityPlayer:
     connection -> f
 net.minecraft.world.scores.Team$CollisionRule -> net.minecraft.world.scores.ScoreboardTeamBase$EnumTeamPush:
+    ALWAYS -> a
     NEVER -> b
+    PUSH_OTHER_TEAMS -> c
+    PUSH_OWN_TEAM -> d
 net.minecraft.ChatFormatting -> net.minecraft.EnumChatFormat:
     getByCode(char) -> a
 net.minecraft.network.syncher.EntityDataSerializer -> net.minecraft.network.syncher.DataWatcherSerializer:
@@ -346,6 +412,7 @@ net.minecraft.network.syncher.SynchedEntityData$Builder -> net.minecraft.network
 net.minecraft.network.syncher.SyncedDataHolder -> net.minecraft.network.syncher.SyncedDataHolder:
 net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket -> net.minecraft.network.protocol.game.PacketPlayOutEntityDestroy:
 net.minecraft.world.scores.PlayerTeam -> net.minecraft.world.scores.ScoreboardTeam:
+    setNameTagVisibility(net.minecraft.world.scores.Team$Visibility) -> a
     setCollisionRule(net.minecraft.world.scores.Team$CollisionRule) -> a
     setColor(net.minecraft.ChatFormatting) -> a
 net.minecraft.network.syncher.EntityDataAccessor -> net.minecraft.network.syncher.DataWatcherObject:
@@ -365,9 +432,15 @@ net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket -> net.minecr
 net.minecraft.world.phys.Vec3 -> net.minecraft.world.phys.Vec3D:
 net.minecraft.world.entity.Marker -> net.minecraft.world.entity.Marker:
 net.minecraft.network.protocol.Packet -> net.minecraft.network.protocol.Packet:
+net.minecraft.world.scores.Team$Visibility -> net.minecraft.world.scores.ScoreboardTeamBase$EnumNameTagVisibility:
+    ALWAYS -> a
+    NEVER -> b
+    HIDE_FOR_OTHER_TEAMS -> c
+    HIDE_FOR_OWN_TEAM -> d
 net.minecraft.world.level.Level -> net.minecraft.world.level.World:
 net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket$Parameters -> net.minecraft.network.protocol.game.PacketPlayOutScoreboardTeam$b:
 net.minecraft.world.scores.PlayerTeam -> net.minecraft.world.scores.ScoreboardTeam:
+    setNameTagVisibility(net.minecraft.world.scores.Team$Visibility) -> setNameTagVisibility
     setCollisionRule(net.minecraft.world.scores.Team$CollisionRule) -> setCollisionRule
     setColor(net.minecraft.ChatFormatting) -> setColor
 net.minecraft.network.protocol.game.ClientboundRemoveEntityPacket -> net.minecraft.network.protocol.game.PacketPlayOutEntityDestroy:
@@ -385,7 +458,10 @@ net.minecraft.world.scores.Scoreboard -> net.minecraft.world.scores.Scoreboard:
 net.minecraft.server.level.ServerPlayer -> net.minecraft.server.level.EntityPlayer:
     connection -> b
 net.minecraft.world.scores.Team$CollisionRule -> net.minecraft.world.scores.ScoreboardTeamBase$EnumTeamPush:
+    ALWAYS -> a
     NEVER -> b
+    PUSH_OTHER_TEAMS -> c
+    PUSH_OWN_TEAM -> d
 net.minecraft.server.network.ServerGamePacketListenerImpl -> net.minecraft.server.network.PlayerConnection:
     connection -> a
     send(net.minecraft.network.protocol.Packet) -> sendPacket
@@ -403,10 +479,16 @@ net.minecraft.ChatFormatting -> net.minecraft.EnumChatFormat:
     getByCode(char) -> a
 net.minecraft.world.entity.Marker -> net.minecraft.world.entity.Marker:
 net.minecraft.network.protocol.Packet -> net.minecraft.network.protocol.Packet:
+net.minecraft.world.scores.Team$Visibility -> net.minecraft.world.scores.ScoreboardTeamBase$EnumNameTagVisibility:
+    ALWAYS -> a
+    NEVER -> b
+    HIDE_FOR_OTHER_TEAMS -> c
+    HIDE_FOR_OWN_TEAM -> d
 net.minecraft.world.level.Level -> net.minecraft.world.level.World:
 net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket$Parameters -> net.minecraft.network.protocol.game.PacketPlayOutScoreboardTeam$b:
 net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket -> net.minecraft.network.protocol.game.PacketPlayOutEntityDestroy:
 net.minecraft.world.scores.PlayerTeam -> net.minecraft.world.scores.ScoreboardTeam:
+    setNameTagVisibility(net.minecraft.world.scores.Team$Visibility) -> a
     setCollisionRule(net.minecraft.world.scores.Team$CollisionRule) -> a
     setColor(net.minecraft.ChatFormatting) -> a
 net.minecraft.world.entity.EntityType -> net.minecraft.world.entity.EntityTypes:
@@ -423,7 +505,10 @@ net.minecraft.world.scores.Scoreboard -> net.minecraft.world.scores.Scoreboard:
 net.minecraft.server.level.ServerPlayer -> net.minecraft.server.level.EntityPlayer:
     connection -> b
 net.minecraft.world.scores.Team$CollisionRule -> net.minecraft.world.scores.ScoreboardTeamBase$EnumTeamPush:
+    ALWAYS -> a
     NEVER -> b
+    PUSH_OTHER_TEAMS -> c
+    PUSH_OWN_TEAM -> d
 net.minecraft.server.network.ServerGamePacketListenerImpl -> net.minecraft.server.network.PlayerConnection:
     connection -> a
     send(net.minecraft.network.protocol.Packet) -> a
@@ -441,10 +526,16 @@ net.minecraft.ChatFormatting -> net.minecraft.EnumChatFormat:
     getByCode(char) -> a
 net.minecraft.world.entity.Marker -> net.minecraft.world.entity.Marker:
 net.minecraft.network.protocol.Packet -> net.minecraft.network.protocol.Packet:
+net.minecraft.world.scores.Team$Visibility -> net.minecraft.world.scores.ScoreboardTeamBase$EnumNameTagVisibility:
+    ALWAYS -> a
+    NEVER -> b
+    HIDE_FOR_OTHER_TEAMS -> c
+    HIDE_FOR_OWN_TEAM -> d
 net.minecraft.world.level.Level -> net.minecraft.world.level.World:
 net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket$Parameters -> net.minecraft.network.protocol.game.PacketPlayOutScoreboardTeam$b:
 net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket -> net.minecraft.network.protocol.game.PacketPlayOutEntityDestroy:
 net.minecraft.world.scores.PlayerTeam -> net.minecraft.world.scores.ScoreboardTeam:
+    setNameTagVisibility(net.minecraft.world.scores.Team$Visibility) -> a
     setCollisionRule(net.minecraft.world.scores.Team$CollisionRule) -> a
     setColor(net.minecraft.ChatFormatting) -> a
 net.minecraft.world.entity.EntityType -> net.minecraft.world.entity.EntityTypes:
@@ -461,7 +552,10 @@ net.minecraft.world.scores.Scoreboard -> net.minecraft.world.scores.Scoreboard:
 net.minecraft.server.level.ServerPlayer -> net.minecraft.server.level.EntityPlayer:
     connection -> b
 net.minecraft.world.scores.Team$CollisionRule -> net.minecraft.world.scores.ScoreboardTeamBase$EnumTeamPush:
+    ALWAYS -> a
     NEVER -> b
+    PUSH_OTHER_TEAMS -> c
+    PUSH_OWN_TEAM -> d
 net.minecraft.server.network.ServerGamePacketListenerImpl -> net.minecraft.server.network.PlayerConnection:
     connection -> b
     send(net.minecraft.network.protocol.Packet) -> a
@@ -479,6 +573,11 @@ net.minecraft.ChatFormatting -> net.minecraft.EnumChatFormat:
     getByCode(char) -> a
 net.minecraft.world.entity.Marker -> net.minecraft.world.entity.Marker:
 net.minecraft.network.protocol.Packet -> net.minecraft.network.protocol.Packet:
+net.minecraft.world.scores.Team$Visibility -> net.minecraft.world.scores.ScoreboardTeamBase$EnumNameTagVisibility:
+    ALWAYS -> a
+    NEVER -> b
+    HIDE_FOR_OTHER_TEAMS -> c
+    HIDE_FOR_OWN_TEAM -> d
 net.minecraft.world.level.Level -> net.minecraft.world.level.World:
 net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket$Parameters -> net.minecraft.network.protocol.game.PacketPlayOutScoreboardTeam$b:
 net.minecraft.world.entity.EntityType -> net.minecraft.world.entity.EntityTypes:
@@ -498,7 +597,10 @@ net.minecraft.network.syncher.SynchedEntityData$DataValue -> net.minecraft.netwo
 net.minecraft.server.level.ServerPlayer -> net.minecraft.server.level.EntityPlayer:
     connection -> f
 net.minecraft.world.scores.Team$CollisionRule -> net.minecraft.world.scores.ScoreboardTeamBase$EnumTeamPush:
+    ALWAYS -> a
     NEVER -> b
+    PUSH_OTHER_TEAMS -> c
+    PUSH_OWN_TEAM -> d
 net.minecraft.ChatFormatting -> net.minecraft.EnumChatFormat:
     getByCode(char) -> a
 net.minecraft.network.syncher.EntityDataSerializer -> net.minecraft.network.syncher.DataWatcherSerializer:
@@ -509,6 +611,7 @@ net.minecraft.network.syncher.SynchedEntityData$Builder -> net.minecraft.network
 net.minecraft.network.syncher.SyncedDataHolder -> net.minecraft.network.syncher.SyncedDataHolder:
 net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket -> net.minecraft.network.protocol.game.PacketPlayOutEntityDestroy:
 net.minecraft.world.scores.PlayerTeam -> net.minecraft.world.scores.ScoreboardTeam:
+    setNameTagVisibility(net.minecraft.world.scores.Team$Visibility) -> a
     setCollisionRule(net.minecraft.world.scores.Team$CollisionRule) -> a
     setColor(net.minecraft.ChatFormatting) -> a
 net.minecraft.network.syncher.EntityDataAccessor -> net.minecraft.network.syncher.DataWatcherObject:
@@ -528,10 +631,16 @@ net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket -> net.minecr
 net.minecraft.world.phys.Vec3 -> net.minecraft.world.phys.Vec3D:
 net.minecraft.world.entity.Marker -> net.minecraft.world.entity.Marker:
 net.minecraft.network.protocol.Packet -> net.minecraft.network.protocol.Packet:
+net.minecraft.world.scores.Team$Visibility -> net.minecraft.world.scores.ScoreboardTeamBase$EnumNameTagVisibility:
+    ALWAYS -> a
+    NEVER -> b
+    HIDE_FOR_OTHER_TEAMS -> c
+    HIDE_FOR_OWN_TEAM -> d
 net.minecraft.world.level.Level -> net.minecraft.world.level.World:
 net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket$Parameters -> net.minecraft.network.protocol.game.PacketPlayOutScoreboardTeam$b:
 net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket -> net.minecraft.network.protocol.game.PacketPlayOutEntityDestroy:
 net.minecraft.world.scores.PlayerTeam -> net.minecraft.world.scores.ScoreboardTeam:
+    setNameTagVisibility(net.minecraft.world.scores.Team$Visibility) -> setNameTagVisibility
     setCollisionRule(net.minecraft.world.scores.Team$CollisionRule) -> setCollisionRule
     setColor(net.minecraft.ChatFormatting) -> setColor
 net.minecraft.world.entity.EntityType -> net.minecraft.world.entity.EntityTypes:
@@ -548,7 +657,10 @@ net.minecraft.world.scores.Scoreboard -> net.minecraft.world.scores.Scoreboard:
 net.minecraft.server.level.ServerPlayer -> net.minecraft.server.level.EntityPlayer:
     connection -> b
 net.minecraft.world.scores.Team$CollisionRule -> net.minecraft.world.scores.ScoreboardTeamBase$EnumTeamPush:
+    ALWAYS -> a
     NEVER -> b
+    PUSH_OTHER_TEAMS -> c
+    PUSH_OWN_TEAM -> d
 net.minecraft.server.network.ServerGamePacketListenerImpl -> net.minecraft.server.network.PlayerConnection:
     connection -> a
     send(net.minecraft.network.protocol.Packet) -> sendPacket
@@ -566,10 +678,16 @@ net.minecraft.ChatFormatting -> net.minecraft.EnumChatFormat:
     getByCode(char) -> a
 net.minecraft.world.entity.Marker -> net.minecraft.world.entity.Marker:
 net.minecraft.network.protocol.Packet -> net.minecraft.network.protocol.Packet:
+net.minecraft.world.scores.Team$Visibility -> net.minecraft.world.scores.ScoreboardTeamBase$EnumNameTagVisibility:
+    ALWAYS -> a
+    NEVER -> b
+    HIDE_FOR_OTHER_TEAMS -> c
+    HIDE_FOR_OWN_TEAM -> d
 net.minecraft.world.level.Level -> net.minecraft.world.level.World:
 net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket$Parameters -> net.minecraft.network.protocol.game.PacketPlayOutScoreboardTeam$b:
 net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket -> net.minecraft.network.protocol.game.PacketPlayOutEntityDestroy:
 net.minecraft.world.scores.PlayerTeam -> net.minecraft.world.scores.ScoreboardTeam:
+    setNameTagVisibility(net.minecraft.world.scores.Team$Visibility) -> a
     setCollisionRule(net.minecraft.world.scores.Team$CollisionRule) -> a
     setColor(net.minecraft.ChatFormatting) -> a
 net.minecraft.world.entity.EntityType -> net.minecraft.world.entity.EntityTypes:
@@ -586,7 +704,10 @@ net.minecraft.world.scores.Scoreboard -> net.minecraft.world.scores.Scoreboard:
 net.minecraft.server.level.ServerPlayer -> net.minecraft.server.level.EntityPlayer:
     connection -> b
 net.minecraft.world.scores.Team$CollisionRule -> net.minecraft.world.scores.ScoreboardTeamBase$EnumTeamPush:
+    ALWAYS -> a
     NEVER -> b
+    PUSH_OTHER_TEAMS -> c
+    PUSH_OWN_TEAM -> d
 net.minecraft.server.network.ServerGamePacketListenerImpl -> net.minecraft.server.network.PlayerConnection:
     connection -> a
     send(net.minecraft.network.protocol.Packet) -> a
@@ -604,10 +725,16 @@ net.minecraft.ChatFormatting -> net.minecraft.EnumChatFormat:
     getByCode(char) -> a
 net.minecraft.world.entity.Marker -> net.minecraft.world.entity.Marker:
 net.minecraft.network.protocol.Packet -> net.minecraft.network.protocol.Packet:
+net.minecraft.world.scores.Team$Visibility -> net.minecraft.world.scores.ScoreboardTeamBase$EnumNameTagVisibility:
+    ALWAYS -> a
+    NEVER -> b
+    HIDE_FOR_OTHER_TEAMS -> c
+    HIDE_FOR_OWN_TEAM -> d
 net.minecraft.world.level.Level -> net.minecraft.world.level.World:
 net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket$Parameters -> net.minecraft.network.protocol.game.PacketPlayOutScoreboardTeam$b:
 net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket -> net.minecraft.network.protocol.game.PacketPlayOutEntityDestroy:
 net.minecraft.world.scores.PlayerTeam -> net.minecraft.world.scores.ScoreboardTeam:
+    setNameTagVisibility(net.minecraft.world.scores.Team$Visibility) -> a
     setCollisionRule(net.minecraft.world.scores.Team$CollisionRule) -> a
     setColor(net.minecraft.ChatFormatting) -> a
 net.minecraft.world.entity.EntityType -> net.minecraft.world.entity.EntityTypes:
@@ -629,7 +756,10 @@ net.minecraft.world.scores.Scoreboard -> net.minecraft.world.scores.Scoreboard:
 net.minecraft.server.level.ServerPlayer -> net.minecraft.server.level.EntityPlayer:
     connection -> b
 net.minecraft.world.scores.Team$CollisionRule -> net.minecraft.world.scores.ScoreboardTeamBase$EnumTeamPush:
+    ALWAYS -> a
     NEVER -> b
+    PUSH_OTHER_TEAMS -> c
+    PUSH_OWN_TEAM -> d
 net.minecraft.server.network.ServerGamePacketListenerImpl -> net.minecraft.server.network.PlayerConnection:
     connection -> b
     send(net.minecraft.network.protocol.Packet) -> a
@@ -646,10 +776,16 @@ net.minecraft.world.entity.Marker -> net.minecraft.world.entity.Marker:
 net.minecraft.network.protocol.Packet -> net.minecraft.network.protocol.Packet:
 net.minecraft.network.syncher.EntityDataSerializer -> net.minecraft.network.syncher.DataWatcherSerializer:
     createAccessor(int) -> a
+net.minecraft.world.scores.Team$Visibility -> net.minecraft.world.scores.ScoreboardTeamBase$EnumNameTagVisibility:
+    ALWAYS -> a
+    NEVER -> b
+    HIDE_FOR_OTHER_TEAMS -> c
+    HIDE_FOR_OWN_TEAM -> d
 net.minecraft.world.level.Level -> net.minecraft.world.level.World:
 net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket$Parameters -> net.minecraft.network.protocol.game.PacketPlayOutScoreboardTeam$b:
 net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket -> net.minecraft.network.protocol.game.PacketPlayOutEntityDestroy:
 net.minecraft.world.scores.PlayerTeam -> net.minecraft.world.scores.ScoreboardTeam:
+    setNameTagVisibility(net.minecraft.world.scores.Team$Visibility) -> a
     setCollisionRule(net.minecraft.world.scores.Team$CollisionRule) -> a
     setColor(net.minecraft.ChatFormatting) -> a
 net.minecraft.world.entity.EntityType -> net.minecraft.world.entity.EntityTypes:
@@ -676,7 +812,10 @@ net.minecraft.world.scores.Scoreboard -> net.minecraft.world.scores.Scoreboard:
 net.minecraft.server.level.ServerPlayer -> net.minecraft.server.level.EntityPlayer:
     connection -> c
 net.minecraft.world.scores.Team$CollisionRule -> net.minecraft.world.scores.ScoreboardTeamBase$EnumTeamPush:
+    ALWAYS -> a
     NEVER -> b
+    PUSH_OTHER_TEAMS -> c
+    PUSH_OWN_TEAM -> d
 net.minecraft.world.entity.Entity -> net.minecraft.world.entity.Entity:
     DATA_SHARED_FLAGS_ID -> ao
     getEntityData() -> an
@@ -690,10 +829,16 @@ net.minecraft.world.entity.Marker -> net.minecraft.world.entity.Marker:
 net.minecraft.network.protocol.Packet -> net.minecraft.network.protocol.Packet:
 net.minecraft.network.syncher.EntityDataSerializer -> net.minecraft.network.syncher.DataWatcherSerializer:
     createAccessor(int) -> a
+net.minecraft.world.scores.Team$Visibility -> net.minecraft.world.scores.ScoreboardTeamBase$EnumNameTagVisibility:
+    ALWAYS -> a
+    NEVER -> b
+    HIDE_FOR_OTHER_TEAMS -> c
+    HIDE_FOR_OWN_TEAM -> d
 net.minecraft.world.level.Level -> net.minecraft.world.level.World:
 net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket$Parameters -> net.minecraft.network.protocol.game.PacketPlayOutScoreboardTeam$b:
 net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket -> net.minecraft.network.protocol.game.PacketPlayOutEntityDestroy:
 net.minecraft.world.scores.PlayerTeam -> net.minecraft.world.scores.ScoreboardTeam:
+    setNameTagVisibility(net.minecraft.world.scores.Team$Visibility) -> a
     setCollisionRule(net.minecraft.world.scores.Team$CollisionRule) -> a
     setColor(net.minecraft.ChatFormatting) -> a
 net.minecraft.world.entity.EntityType -> net.minecraft.world.entity.EntityTypes:
@@ -717,7 +862,10 @@ net.minecraft.world.scores.Scoreboard -> net.minecraft.world.scores.Scoreboard:
 net.minecraft.server.level.ServerPlayer -> net.minecraft.server.level.EntityPlayer:
     connection -> b
 net.minecraft.world.scores.Team$CollisionRule -> net.minecraft.world.scores.ScoreboardTeamBase$EnumTeamPush:
+    ALWAYS -> a
     NEVER -> b
+    PUSH_OTHER_TEAMS -> c
+    PUSH_OWN_TEAM -> d
 net.minecraft.server.network.ServerGamePacketListenerImpl -> net.minecraft.server.network.PlayerConnection:
     connection -> h
     send(net.minecraft.network.protocol.Packet) -> a
@@ -734,6 +882,11 @@ net.minecraft.world.entity.Marker -> net.minecraft.world.entity.Marker:
 net.minecraft.network.protocol.Packet -> net.minecraft.network.protocol.Packet:
 net.minecraft.network.syncher.EntityDataSerializer -> net.minecraft.network.syncher.DataWatcherSerializer:
     createAccessor(int) -> a
+net.minecraft.world.scores.Team$Visibility -> net.minecraft.world.scores.ScoreboardTeamBase$EnumNameTagVisibility:
+    ALWAYS -> a
+    NEVER -> b
+    HIDE_FOR_OTHER_TEAMS -> c
+    HIDE_FOR_OWN_TEAM -> d
 net.minecraft.world.level.Level -> net.minecraft.world.level.World:
 net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket$Parameters -> net.minecraft.network.protocol.game.PacketPlayOutScoreboardTeam$b:
 net.minecraft.world.entity.EntityType -> net.minecraft.world.entity.EntityTypes:
@@ -753,7 +906,10 @@ net.minecraft.network.syncher.SynchedEntityData$DataValue -> net.minecraft.netwo
 net.minecraft.server.level.ServerPlayer -> net.minecraft.server.level.EntityPlayer:
     connection -> c
 net.minecraft.world.scores.Team$CollisionRule -> net.minecraft.world.scores.ScoreboardTeamBase$EnumTeamPush:
+    ALWAYS -> a
     NEVER -> b
+    PUSH_OTHER_TEAMS -> c
+    PUSH_OWN_TEAM -> d
 net.minecraft.ChatFormatting -> net.minecraft.EnumChatFormat:
     getByCode(char) -> a
 net.minecraft.network.syncher.EntityDataSerializer -> net.minecraft.network.syncher.DataWatcherSerializer:
@@ -764,6 +920,7 @@ net.minecraft.network.syncher.SynchedEntityData$Builder -> net.minecraft.network
 net.minecraft.network.syncher.SyncedDataHolder -> net.minecraft.network.syncher.SyncedDataHolder:
 net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket -> net.minecraft.network.protocol.game.PacketPlayOutEntityDestroy:
 net.minecraft.world.scores.PlayerTeam -> net.minecraft.world.scores.ScoreboardTeam:
+    setNameTagVisibility(net.minecraft.world.scores.Team$Visibility) -> a
     setCollisionRule(net.minecraft.world.scores.Team$CollisionRule) -> a
     setColor(net.minecraft.ChatFormatting) -> a
 net.minecraft.network.syncher.EntityDataAccessor -> net.minecraft.network.syncher.DataWatcherObject:
@@ -783,5 +940,10 @@ net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket -> net.minecr
 net.minecraft.world.phys.Vec3 -> net.minecraft.world.phys.Vec3D:
 net.minecraft.world.entity.Marker -> net.minecraft.world.entity.Marker:
 net.minecraft.network.protocol.Packet -> net.minecraft.network.protocol.Packet:
+net.minecraft.world.scores.Team$Visibility -> net.minecraft.world.scores.ScoreboardTeamBase$EnumNameTagVisibility:
+    ALWAYS -> a
+    NEVER -> b
+    HIDE_FOR_OTHER_TEAMS -> c
+    HIDE_FOR_OWN_TEAM -> d
 net.minecraft.world.level.Level -> net.minecraft.world.level.World:
 net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket$Parameters -> net.minecraft.network.protocol.game.PacketPlayOutScoreboardTeam$b:

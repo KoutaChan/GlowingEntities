@@ -5,3 +5,5 @@
 .project
 /rawMappings
 /dependency-reduced-pom.xml
+.idea/
+glowingentities.iml
