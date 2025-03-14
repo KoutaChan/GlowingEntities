@@ -176,7 +176,7 @@ public class GlowingEntities implements Listener {
 	public void setGlowing(int entityID, String teamID, Player receiver, GlowTeam glowTeam, byte otherFlags)
 			throws ReflectiveOperationException {
 		ensureEnabled();
-		if (glowTeam != null && glowTeam.isValidColor())
+		if (glowTeam != null && !glowTeam.isValidColor())
 			throw new IllegalArgumentException("ChatColor must be a color format");
 
 		PlayerData playerData = glowing.get(receiver);
