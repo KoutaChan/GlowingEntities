@@ -131,7 +131,7 @@ public class GlowingEntities implements Listener {
 	 */
 	public void setGlowing(Entity entity, Player receiver, GlowTeam glowTeam) throws ReflectiveOperationException {
 		String teamID = entity instanceof Player ? entity.getName() : entity.getUniqueId().toString();
-		Team team = Bukkit.getScoreboardManager().getNewScoreboard().getEntryTeam(entity.getName());
+		Team team = Bukkit.getScoreboardManager().getMainScoreboard().getEntryTeam(entity.getName());
 		String lastTeamID = team != null ? team.getName() : null;
 		setGlowing(entity.getEntityId(), teamID, lastTeamID, receiver, glowTeam, Packets.getEntityFlags(entity));
 	}
@@ -313,10 +313,6 @@ public class GlowingEntities implements Listener {
 			this.glowTeam = glowTeam;
 			this.otherFlags = otherFlags;
 			this.enabled = true;
-		}
-
-		public String getPreviousTeamID() {
-			return previousTeamID;
 		}
 
 		public ChatColor getColor() {
