@@ -23,10 +23,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scoreboard.Team;
 import org.jetbrains.annotations.NotNull;
-import java.lang.reflect.Array;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
+
+import java.lang.reflect.*;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
@@ -81,7 +79,7 @@ public class GlowingEntities implements Listener {
 	/**
 	 * Disables the API.
 	 * <p>
-	 * Methods such as {@link #setGlowing(int, String, Player, GlowTeam, byte)} and
+	 * Methods such as {@link #setGlowing(int, String, Player)} and
 	 * {@link #unsetGlowing(int, Player)} will no longer be usable.
 	 *
 	 * @see #enable()
@@ -133,7 +131,9 @@ public class GlowingEntities implements Listener {
 	 */
 	public void setGlowing(Entity entity, Player receiver, GlowTeam glowTeam) throws ReflectiveOperationException {
 		String teamID = entity instanceof Player ? entity.getName() : entity.getUniqueId().toString();
-		setGlowing(entity.getEntityId(), teamID, receiver, glowTeam, Packets.getEntityFlags(entity));
+		Team team = Bukkit.getScoreboardManager().getNewScoreboard().getEntryTeam(entity.getName());
+		String lastTeamID = team != null ? team.getName() : null;
+		setGlowing(entity.getEntityId(), teamID, lastTeamID, receiver, glowTeam, Packets.getEntityFlags(entity));
 	}
 
 	/**
@@ -145,7 +145,7 @@ public class GlowingEntities implements Listener {
 	 * @throws ReflectiveOperationException
 	 */
 	public void setGlowing(int entityID, String teamID, Player receiver) throws ReflectiveOperationException {
-		setGlowing(entityID, teamID, receiver, null, (byte) 0);
+		setGlowing(entityID, teamID, null, receiver, null, (byte) 0);
 	}
 
 	/**
@@ -159,7 +159,7 @@ public class GlowingEntities implements Listener {
 	 */
 	public void setGlowing(int entityID, String teamID, Player receiver, GlowTeam glowTeam)
 			throws ReflectiveOperationException {
-		setGlowing(entityID, teamID, receiver, glowTeam, (byte) 0);
+		setGlowing(entityID, teamID, null, receiver, glowTeam, (byte) 0);
 	}
 
 	/**
@@ -173,7 +173,7 @@ public class GlowingEntities implements Listener {
 	 *        <a href="https://wiki.vg/Entity_metadata#Entity">wiki.vg</a> for more informations.
 	 * @throws ReflectiveOperationException
 	 */
-	public void setGlowing(int entityID, String teamID, Player receiver, GlowTeam glowTeam, byte otherFlags)
+	public void setGlowing(int entityID, String teamID, String previousTeamID, Player receiver, GlowTeam glowTeam, byte otherFlags)
 			throws ReflectiveOperationException {
 		ensureEnabled();
 		if (glowTeam != null && !glowTeam.isValidColor())
@@ -189,7 +189,7 @@ public class GlowingEntities implements Listener {
 		GlowingData glowingData = playerData.glowingData.get(entityID);
 		if (glowingData == null) {
 			// the player did not have datas related to the entity: we must create the glowing status
-			glowingData = new GlowingData(playerData, entityID, teamID, glowTeam, otherFlags);
+			glowingData = new GlowingData(playerData, entityID, teamID, previousTeamID, glowTeam, otherFlags);
 			playerData.glowingData.put(entityID, glowingData);
 
 			Packets.createGlowing(glowingData);
@@ -248,6 +248,12 @@ public class GlowingEntities implements Listener {
 		if (glowingData.glowTeam != null)
 			Packets.removeTeam(glowingData);
 
+		if (glowingData.previousTeamID != null
+				&& Bukkit.getScoreboardManager().getMainScoreboard().getTeam(glowingData.previousTeamID) != null) { // must check team is existing
+			// Todo: track team
+			Packets.addTeam(glowingData, glowingData.previousTeamID);
+		}
+
 		/*
 		 * if (playerData.glowingDatas.isEmpty()) { //NOSONAR // if the player do not have any other entity
 		 * glowing, // we can safely remove all of its data to free some memory
@@ -292,18 +298,25 @@ public class GlowingEntities implements Listener {
 		final int entityID;
 		final String teamID;
 
+		final String previousTeamID;
+
 		GlowTeam glowTeam;
 
 		byte otherFlags;
 		boolean enabled;
 
-		GlowingData(PlayerData player, int entityID, String teamID, GlowTeam glowTeam, byte otherFlags) {
+		GlowingData(PlayerData player, int entityID, String teamID, String previousTeamID, GlowTeam glowTeam, byte otherFlags) {
 			this.player = player;
 			this.entityID = entityID;
 			this.teamID = teamID;
+			this.previousTeamID = previousTeamID;
 			this.glowTeam = glowTeam;
 			this.otherFlags = otherFlags;
 			this.enabled = true;
+		}
+
+		public String getPreviousTeamID() {
+			return previousTeamID;
 		}
 
 		public ChatColor getColor() {
@@ -718,6 +731,10 @@ public class GlowingEntities implements Listener {
 				return; // must not happen; this means the color has not been set previously
 
 			sendPackets(glowingData.player.player, teamData.getEntityRemovePacket(glowingData.teamID));
+		}
+
+		public static void addTeam(GlowingData glowingData, String teamId) throws ReflectiveOperationException {
+			sendPackets(glowingData.player.player, createTeamPacket.newInstance(teamId, 3, Optional.empty(), Arrays.asList(glowingData.teamID)));
 		}
 
 		public static void createEntity(Player player, int entityId, UUID entityUuid, Object entityType, Location location)
