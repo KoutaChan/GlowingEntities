@@ -6,18 +6,18 @@ import org.bukkit.scoreboard.Team;
 
 import java.util.Objects;
 
-public class GlowTeam {
-    public static GlowTeam DEFAULT_TEAM = new GlowTeam(ChatColor.WHITE, Team.OptionStatus.NEVER, Team.OptionStatus.NEVER);
+public class GlowingTeam {
+    public final static GlowingTeam DEFAULT_TEAM = new GlowingTeam(ChatColor.WHITE, Team.OptionStatus.NEVER, Team.OptionStatus.NEVER);
 
     final ChatColor color;
     final Team.OptionStatus nameTagVisibility;
     final Team.OptionStatus collisionRule;
 
-    public GlowTeam(ChatColor color) {
+    public GlowingTeam(ChatColor color) {
         this(color, Team.OptionStatus.NEVER, Team.OptionStatus.NEVER);
     }
 
-    public GlowTeam(ChatColor color, Team.OptionStatus nameTagVisibility, Team.OptionStatus collisionRule) {
+    public GlowingTeam(ChatColor color, Team.OptionStatus nameTagVisibility, Team.OptionStatus collisionRule) {
         this.color = Preconditions.checkNotNull(color);
         this.nameTagVisibility = Preconditions.checkNotNull(nameTagVisibility);
         this.collisionRule = Preconditions.checkNotNull(collisionRule);
@@ -34,7 +34,7 @@ public class GlowTeam {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof GlowTeam that)) return false;
+        if (!(o instanceof GlowingTeam that)) return false;
         return color == that.color && nameTagVisibility == that.nameTagVisibility && collisionRule == that.collisionRule;
     }
 

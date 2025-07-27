@@ -126,14 +126,14 @@ public class GlowingEntities implements Listener {
 	 *
 	 * @param entity entity to make glow
 	 * @param receiver player which will see the entity glowing
-	 * @param glowTeam glow team settings
+	 * @param glowingTeam glow team settings
 	 * @throws ReflectiveOperationException
 	 */
-	public void setGlowing(Entity entity, Player receiver, GlowTeam glowTeam) throws ReflectiveOperationException {
+	public void setGlowing(Entity entity, Player receiver, GlowingTeam glowingTeam) throws ReflectiveOperationException {
 		String teamID = entity instanceof Player ? entity.getName() : entity.getUniqueId().toString();
 		Team team = Bukkit.getScoreboardManager().getMainScoreboard().getEntryTeam(entity.getName());
 		String lastTeamID = team != null ? team.getName() : null;
-		setGlowing(entity.getEntityId(), teamID, lastTeamID, receiver, glowTeam, Packets.getEntityFlags(entity));
+		setGlowing(entity.getEntityId(), teamID, lastTeamID, receiver, glowingTeam, Packets.getEntityFlags(entity));
 	}
 
 	/**
@@ -154,12 +154,12 @@ public class GlowingEntities implements Listener {
 	 * @param entityID entity id of the entity to make glow
 	 * @param teamID internal string used to add the entity to a team
 	 * @param receiver player which will see the entity glowing
-	 * @param glowTeam glow team settings
+	 * @param glowingTeam glow team settings
 	 * @throws ReflectiveOperationException
 	 */
-	public void setGlowing(int entityID, String teamID, Player receiver, GlowTeam glowTeam)
+	public void setGlowing(int entityID, String teamID, Player receiver, GlowingTeam glowingTeam)
 			throws ReflectiveOperationException {
-		setGlowing(entityID, teamID, null, receiver, glowTeam, (byte) 0);
+		setGlowing(entityID, teamID, null, receiver, glowingTeam, (byte) 0);
 	}
 
 	/**
@@ -168,15 +168,15 @@ public class GlowingEntities implements Listener {
 	 * @param entityID entity id of the entity to make glow
 	 * @param teamID internal string used to add the entity to a team
 	 * @param receiver player which will see the entity glowing
-	 * @param glowTeam glow team settings
+	 * @param glowingTeam glow team settings
 	 * @param otherFlags internal flags that must be kept (on fire, crouching...). See
 	 *        <a href="https://wiki.vg/Entity_metadata#Entity">wiki.vg</a> for more informations.
 	 * @throws ReflectiveOperationException
 	 */
-	public void setGlowing(int entityID, String teamID, String previousTeamID, Player receiver, GlowTeam glowTeam, byte otherFlags)
+	public void setGlowing(int entityID, String teamID, String previousTeamID, Player receiver, GlowingTeam glowingTeam, byte otherFlags)
 			throws ReflectiveOperationException {
 		ensureEnabled();
-		if (glowTeam != null && !glowTeam.isValidColor())
+		if (glowingTeam != null && !glowingTeam.isValidColor())
 			throw new IllegalArgumentException("ChatColor must be a color format");
 
 		PlayerData playerData = glowing.get(receiver);
@@ -189,23 +189,23 @@ public class GlowingEntities implements Listener {
 		GlowingData glowingData = playerData.glowingData.get(entityID);
 		if (glowingData == null) {
 			// the player did not have datas related to the entity: we must create the glowing status
-			glowingData = new GlowingData(playerData, entityID, teamID, previousTeamID, glowTeam, otherFlags);
+			glowingData = new GlowingData(playerData, entityID, teamID, previousTeamID, glowingTeam, otherFlags);
 			playerData.glowingData.put(entityID, glowingData);
 
 			Packets.createGlowing(glowingData);
-			if (glowTeam != null)
+			if (glowingTeam != null)
 				Packets.updateTeam(glowingData);
 		} else {
 			// the player already had datas related to the entity: we must update the glowing status
 
-			if (Objects.equals(glowingData.glowTeam, glowTeam))
+			if (Objects.equals(glowingData.glowingTeam, glowingTeam))
 				return; // nothing changed
 
-			if (glowTeam == null) {
+			if (glowingTeam == null) {
 				Packets.removeTeam(glowingData);
-				glowingData.glowTeam = null; // we must set the color after in order to fetch the previous team
+				glowingData.glowingTeam = null; // we must set the color after in order to fetch the previous team
 			} else {
-				glowingData.glowTeam = glowTeam;
+				glowingData.glowingTeam = glowingTeam;
 				Packets.updateTeam(glowingData);
 			}
 		}
@@ -245,7 +245,7 @@ public class GlowingEntities implements Listener {
 
 		Packets.removeGlowing(glowingData);
 
-		if (glowingData.glowTeam != null)
+		if (glowingData.glowingTeam != null)
 			Packets.removeTeam(glowingData);
 
 		if (glowingData.previousTeamID != null
@@ -300,23 +300,23 @@ public class GlowingEntities implements Listener {
 
 		final String previousTeamID;
 
-		GlowTeam glowTeam;
+		GlowingTeam glowingTeam;
 
 		byte otherFlags;
 		boolean enabled;
 
-		GlowingData(PlayerData player, int entityID, String teamID, String previousTeamID, GlowTeam glowTeam, byte otherFlags) {
+		GlowingData(PlayerData player, int entityID, String teamID, String previousTeamID, GlowingTeam glowingTeam, byte otherFlags) {
 			this.player = player;
 			this.entityID = entityID;
 			this.teamID = teamID;
 			this.previousTeamID = previousTeamID;
-			this.glowTeam = glowTeam;
+			this.glowingTeam = glowingTeam;
 			this.otherFlags = otherFlags;
 			this.enabled = true;
 		}
 
 		public ChatColor getColor() {
-			return glowTeam.color;
+			return glowingTeam.color;
 		}
 	}
 
@@ -367,7 +367,7 @@ public class GlowingEntities implements Listener {
 		private static Field packetMetadataItems;
 
 		// Teams
-		private final static Map<GlowTeam, TeamData> teams = new HashMap<>();
+		private final static Map<GlowingTeam, TeamData> teams = new HashMap<>();
 
 		private static Constructor<?> createTeamPacket;
 		private static Constructor<?> createTeamPacketData;
@@ -707,10 +707,10 @@ public class GlowingEntities implements Listener {
 				sendCreation = true;
 			}
 
-			TeamData teamData = teams.get(glowingData.glowTeam);
+			TeamData teamData = teams.get(glowingData.glowingTeam);
 			if (teamData == null) {
-				teamData = new TeamData(glowingData.player.instance.uid, glowingData.glowTeam);
-				teams.put(glowingData.glowTeam, teamData);
+				teamData = new TeamData(glowingData.player.instance.uid, glowingData.glowingTeam);
+				teams.put(glowingData.glowingTeam, teamData);
 			}
 
 			Object entityAddPacket = teamData.getEntityAddPacket(glowingData.teamID);
@@ -722,7 +722,7 @@ public class GlowingEntities implements Listener {
 		}
 
 		public static void removeTeam(GlowingData glowingData) throws ReflectiveOperationException {
-			TeamData teamData = teams.get(glowingData.glowTeam);
+			TeamData teamData = teams.get(glowingData.glowingTeam);
 			if (teamData == null)
 				return; // must not happen; this means the color has not been set previously
 
@@ -876,7 +876,6 @@ public class GlowingEntities implements Listener {
 						}
 					}
 				}
-
 			};
 
 			getChannel(playerData.player).pipeline().addBefore("packet_handler", null, playerData.packetsHandler);
@@ -912,14 +911,14 @@ public class GlowingEntities implements Listener {
 			private final Cache<String, Object> removePackets =
 					CacheBuilder.newBuilder().expireAfterAccess(3, TimeUnit.MINUTES).build();
 
-			public TeamData(int uid, GlowTeam glowTeam) throws ReflectiveOperationException {
-				if (glowTeam == null)
+			public TeamData(int uid, GlowingTeam glowingTeam) throws ReflectiveOperationException {
+				if (glowingTeam == null)
 					throw new IllegalArgumentException();
-				id = "glow-" + uid + glowTeam.toId();
+				id = "glow-" + uid + glowingTeam.toId();
 				Object team = createTeam.newInstance(scoreboardDummy, id);
-				setCollisionRule.invoke(team, toPushOption(glowTeam.collisionRule));
-				setNameTagVisibility.invoke(team, toVisibilityOption(glowTeam.nameTagVisibility));
-				setTeamColor.invoke(team, getColorConstant.invoke(null, glowTeam.color.getChar()));
+				setCollisionRule.invoke(team, toPushOption(glowingTeam.collisionRule));
+				setNameTagVisibility.invoke(team, toVisibilityOption(glowingTeam.nameTagVisibility));
+				setTeamColor.invoke(team, getColorConstant.invoke(null, glowingTeam.color.getChar()));
 				Object packetData = createTeamPacketData.newInstance(team);
 				creationPacket = createTeamPacket.newInstance(id, 0, Optional.of(packetData), Collections.EMPTY_LIST);
 			}

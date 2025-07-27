@@ -242,7 +242,7 @@ public class GlowingBlocks implements Listener {
 			this.color = color;
 
 			if (entityUuid != null)
-				entities.setGlowing(entityId, entityUuid.toString(), null, player, new GlowTeam(color), FLAGS);
+				entities.setGlowing(entityId, entityUuid.toString(), null, player, new GlowingTeam(color), FLAGS);
 		}
 
 		public void spawn() throws ReflectiveOperationException {
