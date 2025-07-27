@@ -24,7 +24,7 @@ public class GlowingTeam {
     }
 
     public boolean isValidColor() {
-        return color != null && color.isColor();
+        return color.isColor();
     }
 
     public String toId() {
